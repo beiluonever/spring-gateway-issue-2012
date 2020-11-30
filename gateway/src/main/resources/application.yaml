@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    consul:
+      host: 192.168.99.127
+      port: 32769
+      discovery:
+        instance-id: gateway
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: a-proxy
+        uri: lb://servicea
+        predicates:
+        - Path=/serviceb
+#      - id: url-proxy-2
+#        uri: lb://serviceb
+#        predicates:
+#        - Path=/serviceb
+  application:
+    name: gateway
+
+server:
+  port: 8081
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
